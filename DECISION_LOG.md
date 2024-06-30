@@ -18,4 +18,3 @@ We need static code analysis tools for:
   **Pros**: Tools automate formatting and code style maintenance activities
   **Cons**: New tools add more complexity to solution and require maintenance
   **Decision**: Use Prettier, ESLint and Husky to provide hight code standard across framework
-  **Creator**: Lukasz M
