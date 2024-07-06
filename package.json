@@ -10,7 +10,8 @@
     "test": "npx playwright test",
     "test:headed": "npm run test -- --headed",
     "test:ui": "npm run test -- --ui",
-    "show-report": "npx playwright show-report"
+    "show-report": "npx playwright show-report",
+    "test:tag": "npx playwright test --grep \"@GAD-R01-01|@GAD-R01-02\""
   },
   "keywords": [],
   "author": "",
@@ -22,6 +23,7 @@
     "@types/node": "^20.14.9",
     "@typescript-eslint/eslint-plugin": "^7.14.1",
     "@typescript-eslint/parser": "^7.14.1",
+    "dotenv": "^16.4.5",
     "eslint": "^8.57.0",
     "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-playwright": "^1.6.2",
