@@ -2,10 +2,11 @@ import { BasePage } from './base.page';
 import { MainMenuComponent } from './components/main-menu.component';
 import { Page } from '@playwright/test';
 
-export class ArticlesPage extends BasePage {
+export class ArticlePage extends BasePage {
   url = '/articles.html';
   mainMenu = new MainMenuComponent(this.page);
-  addArticleButtonLogged = this.page.locator('#add-new');
+  articleTitle = this.page.getByTestId('article-title');
+  articleBody = this.page.getByTestId('article-body');
 
   constructor(page: Page) {
     super(page);
