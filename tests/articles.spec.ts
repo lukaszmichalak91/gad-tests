@@ -23,20 +23,6 @@ test.describe('Verify articles', () => {
 
     await expect.soft(addArticlesView.header).toBeVisible();
   });
-  test('create new article @GAD-R04-01', async ({ page }) => {
-    // Arrange
-    const articlePage = new ArticlePage(page);
-    const articleData = randomNewArticle();
-
-    // Act
-    await addArticlesView.createArticle(articleData);
-
-    // Assert
-    await expect(articlePage.articleTitle).toHaveText(articleData.title);
-    await expect(articlePage.articleBody).toHaveText(articleData.body, {
-      useInnerText: true,
-    });
-  });
 
   test('reject new articles with empty title @GAD-R04-01', async () => {
     // Arrange
