@@ -28,19 +28,21 @@ test.describe('Verify register', () => {
     await registerPage.register(registerUserData);
 
     // Assert
+    const expectedLoginTitle = 'Login';
     await expect(registerPage.alertPopup).toHaveText(expectedAlertPopup);
     await loginPage.waitForPageToLoadUrl();
     const titleLogin = await loginPage.getTitle();
-    expect.soft(titleLogin).toContain('Login');
+    expect.soft(titleLogin).toContain(expectedLoginTitle);
 
     // Assert test login
+    const expectedWelcomeTitle = 'Welcome';
     await loginPage.login({
       userEmail: registerUserData.userEmail,
       userPassword: registerUserData.userPassword,
     });
 
     const titleWelcome = await welcomePage.getTitle();
-    expect(titleWelcome).toContain('Welcome');
+    expect(titleWelcome).toContain(expectedWelcomeTitle);
   });
 
   test('not registered with incorrect data and - not valid email @GAD-R03-04', async () => {
