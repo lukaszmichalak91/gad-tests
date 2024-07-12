@@ -13,7 +13,7 @@ test.describe('Verify main menu buttons', () => {
     await articlesPage.goto();
     await articlesPage.mainMenu.commentsButton.click();
     const commentsPage = new CommentsPage(page);
-    const title = await commentsPage.title();
+    const title = await commentsPage.getTitle();
 
     // Assert
     expect(title).toContain('Comments');
@@ -28,7 +28,7 @@ test.describe('Verify main menu buttons', () => {
     await commentsPage.goto();
     await commentsPage.mainMenu.articlesButton.click();
     const articlesPage = new ArticlesPage(page);
-    const title = await articlesPage.title();
+    const title = await articlesPage.getTitle();
 
     // Assert
     expect(title).toContain('Articles');
@@ -43,7 +43,7 @@ test.describe('Verify main menu buttons', () => {
     await articlesPage.goto();
     await articlesPage.mainMenu.homePage.click();
     const homePage = new HomePage(page);
-    const title = await homePage.title();
+    const title = await homePage.getTitle();
 
     // Assert
     expect(title).toContain('GAD');
