@@ -21,7 +21,7 @@ test.describe('Verify articles', () => {
     await articlesPage.goto();
     await articlesPage.addArticleButtonLogged.click();
 
-    await expect.soft(addArticlesView.header).toBeVisible();
+    await expect.soft(addArticlesView.addNewHeader).toBeVisible();
   });
 
   test('reject new articles with empty title @GAD-R04-01', async () => {
