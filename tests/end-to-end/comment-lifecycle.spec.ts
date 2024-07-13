@@ -2,6 +2,7 @@ import { prepareRandomArticle } from '../../src/factories/article.factory';
 import { AddArticleModel } from '../../src/models/article.model';
 import { ArticlePage } from '../../src/pages/article.page';
 import { ArticlesPage } from '../../src/pages/articles.page';
+import { CommentPage } from '../../src/pages/comment.page';
 import { LoginPage } from '../../src/pages/login.page';
 import { testUser1 } from '../../src/test-data/user.data';
 import { AddArticlesView } from '../../src/views/add-article.view';
@@ -15,6 +16,7 @@ test.describe('Create, verify and delete comment', () => {
   let articleData: AddArticleModel;
   let articlePage: ArticlePage;
   let addCommentView: AddCommentsView;
+  let commentPage: CommentPage;
 
   test.beforeEach(async ({ page }) => {
     loginPage = new LoginPage(page);
@@ -22,6 +24,7 @@ test.describe('Create, verify and delete comment', () => {
     addArticlesView = new AddArticlesView(page);
     articlePage = new ArticlePage(page);
     addCommentView = new AddCommentsView(page);
+    commentPage = new CommentPage(page);
 
     articleData = prepareRandomArticle();
     await loginPage.goto();
@@ -36,18 +39,28 @@ test.describe('Create, verify and delete comment', () => {
     // Arrange
     const expectedAddCommentHeader = 'Add New Comment';
     const expectedCommentCreatedPopup = 'Comment was created';
+    const commentText = 'test123';
 
     // Act
     await articlePage.addCommentButton.click();
     await expect(addCommentView.addNewHeader).toHaveText(
       expectedAddCommentHeader,
     );
-    await addCommentView.bodyInput.fill('test123');
+    await addCommentView.bodyInput.fill(commentText);
     await addCommentView.saveButton.click();
 
     // Assert
     await expect(articlePage.alertPopup).toHaveText(
       expectedCommentCreatedPopup,
     );
+
+    // Verify comment
+    // Act
+    const articleComment = articlePage.getArticleComment(commentText);
+    await expect(articleComment.body).toHaveText(commentText);
+    await articleComment.link.click();
+
+    // Assert
+    await expect(commentPage.commentBody).toHaveText(commentText);
   });
 });
