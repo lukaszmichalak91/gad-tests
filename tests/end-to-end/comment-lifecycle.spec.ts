@@ -40,7 +40,7 @@ test.describe('Create, verify and delete comment', () => {
     await addArticlesView.createArticle(articleData);
   });
 
-  test('operate on comments @GAD-R05-01 @GAD-R05-02 @GAD-R05-03', async () => {
+  test('operate on comments @GAD-R05-01 @GAD-R05-02', async () => {
     const newCommentData = prepareRandomComment();
 
     await test.step('create new comment', async () => {
@@ -98,22 +98,40 @@ test.describe('Create, verify and delete comment', () => {
       // Assert
       await expect(updatedArticleComment.body).toHaveText(editCommentData.body);
     });
+  });
 
-    await test.step('create and verify second comment', async () => {
+  test('user can add more than one comment to article @GAD-R05-03', async () => {
+    await test.step('create first comment', async () => {
       // Arrange
-      const secondCommentData = prepareRandomComment();
+      const expectedCommentCreatedPopup = 'Comment was created';
+      const newCommentData = prepareRandomComment();
 
       // Act
       await articlePage.addCommentButton.click();
-      await addCommentView.createComment(secondCommentData);
+      await addCommentView.createComment(newCommentData);
 
       // Assert
-      const articleComment = articlePage.getArticleComment(
-        secondCommentData.body,
-      );
-      await expect(articleComment.body).toHaveText(secondCommentData.body);
-      await articleComment.link.click();
-      await expect(commentPage.commentBody).toHaveText(secondCommentData.body);
+      await expect
+        .soft(articlePage.alertPopup)
+        .toHaveText(expectedCommentCreatedPopup);
+    });
+
+    await test.step('create and verify second comment', async () => {
+      // eslint-disable-next-line playwright/no-nested-step
+      const secondCommentBody = await test.step('create comment', async () => {
+        const secondCommentData = prepareRandomComment();
+        await articlePage.addCommentButton.click();
+        await addCommentView.createComment(secondCommentData);
+        return secondCommentData.body;
+      });
+
+      // eslint-disable-next-line playwright/no-nested-step
+      await test.step('verify comment', async () => {
+        const articleComment = articlePage.getArticleComment(secondCommentBody);
+        await expect(articleComment.body).toHaveText(secondCommentBody);
+        await articleComment.link.click();
+        await expect(commentPage.commentBody).toHaveText(secondCommentBody);
+      });
     });
   });
 });
