@@ -24,7 +24,7 @@ test.describe('Verify articles', () => {
     await expect.soft(addArticlesView.addNewHeader).toBeVisible();
   });
 
-  test('reject new articles with empty title @GAD-R04-01', async () => {
+  test('reject new articles with empty title @GAD-R04-01 @logged', async () => {
     // Arrange
     const expectedAlertText = 'Article was not created';
     const articleData = prepareRandomArticle();
