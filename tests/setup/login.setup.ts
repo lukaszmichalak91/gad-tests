@@ -16,6 +16,5 @@ setup('login with correct credentials @GAD-R02-01', async ({ page }) => {
   const title = await welcomePage.getTitle();
 
   // Assert
-  // eslint-disable-next-line playwright/no-standalone-expect
   expect(title).toContain(expectedWelcomeTitle);
 });
