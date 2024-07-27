@@ -81,17 +81,17 @@ expect(someFunction()).toBe('My expected text');
 ```typescript
 // ✅
 test('Some test description', () => {
-  // Arrange
-  const expectedError = 'xyz';
-  const myPage = new myPage();
-  const data = prepareData();
-  const myPage.customAction(data);
+    // Arrange
+    const expectedError = 'xyz';
+    const myPage = new myPage();
+    const data = prepareData();
+    const myPage.customAction(data);
 
-  // Act
-  const result = doSomethingWithData(data);
+    // Act
+    const result = doSomethingWithData(data);
 
-  // Assert
-  expect(result).toBe(expectedError);
+    // Assert
+    expect(result).toBe(expectedError);
 });
 ```
 
@@ -118,27 +118,65 @@ await expect(page.getByText('Name')).toHaveText(expectedText);
 ```typescript
 // ✅
 class MyClass {
-  myProperty: string;
+    myProperty: string;
 
-  constructor() {
-      this.myProperty = 'Hello';
-  }
+    constructor() {
+        this.myProperty = 'Hello';
+    }
 
-  myMethod() {
-      return this.myProperty;
-  }
+    myMethod() {
+        return this.myProperty;
+    }
 }
 
 // ❌
 class MyClass {
-  public myProperty: string;
+    public myProperty: string;
 
-  constructor() {
-      this.myProperty = 'Hello';
+    constructor() {
+        this.myProperty = 'Hello';
+    }
+
+    public myMethod() {
+        return this.myProperty;
+    }
+}
+```
+
+## Returning Page Objects in Page Object Classes
+
+- When creating methods within page object classes that interact with UI elements and navigate to other pages, these methods should return new page objects representing the navigated pages.
+- The method name should clearly describe the action taken, and the return type should be the page object class for the new page.
+
+**Examples:**
+
+```typescript
+class HomePage {
+  // ... other elements and methods ...
+
+  // ✅
+  async clickSignInButton(): Promise<SignInPage> {
+    // Clicking the sign-in button navigates to the SignInPage.
+    await this.signInButton.click();
+    return new SignInPage(this.page);
   }
 
-  public myMethod() {
-      return this.myProperty;
+  // ❌
+  async clickContactUsButton(): Promise<void> {
+    // Clicking the contact us button navigates to the ContactUs page.
+    await this.contactUsButton.click();
   }
 }
+```
+
+Page objects methods usage i.e. in tests:
+
+```typescript
+// ✅ using page object returned by method
+const signInPage = await homePage.clickSignInButton();
+
+// ❌ creating page object while it can be returned from method
+const contactUsPage = new ContactUsPage(page);
+await homePage.clickContactUsButton();
+contactUsPage.doStuff();
 ```
