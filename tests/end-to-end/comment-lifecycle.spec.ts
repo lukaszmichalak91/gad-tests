@@ -5,15 +5,12 @@ import { AddCommentModel } from '../../src/models/comment.model copy';
 import { ArticlePage } from '../../src/pages/article.page';
 import { ArticlesPage } from '../../src/pages/articles.page';
 import { CommentPage } from '../../src/pages/comment.page';
-import { LoginPage } from '../../src/pages/login.page';
-import { testUser1 } from '../../src/test-data/user.data';
 import { AddArticlesView } from '../../src/views/add-article.view';
 import { AddCommentsView } from '../../src/views/add-comment.view';
 import { EditCommentsView as EditCommentView } from '../../src/views/edit-comment.view';
 import { expect, test } from '@playwright/test';
 
-test.describe('Create, verify and delete comment', () => {
-  let loginPage: LoginPage;
+test.describe('Create, verify and delete comment @logged', () => {
   let articlesPage: ArticlesPage;
   let addArticlesView: AddArticlesView;
   let articleData: AddArticleModel;
@@ -23,7 +20,6 @@ test.describe('Create, verify and delete comment', () => {
   let editCommentView: EditCommentView;
 
   test.beforeEach(async ({ page }) => {
-    loginPage = new LoginPage(page);
     articlesPage = new ArticlesPage(page);
     addArticlesView = new AddArticlesView(page);
     articlePage = new ArticlePage(page);
@@ -33,14 +29,12 @@ test.describe('Create, verify and delete comment', () => {
 
     articleData = prepareRandomArticle();
 
-    await loginPage.goto();
-    await loginPage.login(testUser1);
     await articlesPage.goto();
     await articlesPage.addArticleButtonLogged.click();
     await addArticlesView.createArticle(articleData);
   });
 
-  test('operate on comments @GAD-R05-01 @GAD-R05-02', async () => {
+  test('operate on comments @GAD-R05-01 @GAD-R05-02 @logged', async () => {
     const newCommentData = prepareRandomComment();
 
     await test.step('create new comment', async () => {
@@ -100,7 +94,7 @@ test.describe('Create, verify and delete comment', () => {
     });
   });
 
-  test('user can add more than one comment to article @GAD-R05-03', async () => {
+  test('user can add more than one comment to article @GAD-R05-03 @logged', async () => {
     await test.step('create first comment', async () => {
       // Arrange
       const expectedCommentCreatedPopup = 'Comment was created';
