@@ -47,7 +47,7 @@ test.describe('Create, verify and delete articles', () => {
     });
   });
 
-  test('user can delete his iwn article @GAD-R04-04 @logged', async () => {
+  test('user can delete his own article @GAD-R04-04 @logged', async () => {
     // Arrange
     const expectedArticlesTitle = 'Articles';
     const expectedNoResultText = 'No data';
