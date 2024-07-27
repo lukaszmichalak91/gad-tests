@@ -1,4 +1,4 @@
-import { AddCommentModel } from '../models/comment.model copy';
+import { AddCommentModel } from '@_src/models/comment.model copy';
 import { faker } from '@faker-js/faker/locale/en';
 
 export function prepareRandomComment(bodySentences = 5): AddCommentModel {

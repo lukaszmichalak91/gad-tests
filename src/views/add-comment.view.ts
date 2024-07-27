@@ -1,4 +1,4 @@
-import { AddCommentModel } from '../models/comment.model copy';
+import { AddCommentModel } from '@_src/models/comment.model copy';
 import { Page } from '@playwright/test';
 
 export class AddCommentsView {
