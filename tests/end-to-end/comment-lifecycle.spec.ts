@@ -5,7 +5,6 @@ import { AddCommentModel } from '@_src/models/comment.model copy';
 import { ArticlePage } from '@_src/pages/article.page';
 import { ArticlesPage } from '@_src/pages/articles.page';
 import { AddArticleView } from '@_src/views/add-article.view';
-import { EditCommentsView as EditCommentView } from '@_src/views/edit-comment.view';
 import { expect, test } from '@playwright/test';
 
 test.describe('Create, verify and delete comment @logged', () => {
@@ -13,12 +12,10 @@ test.describe('Create, verify and delete comment @logged', () => {
   let addArticlesView: AddArticleView;
   let articleData: AddArticleModel;
   let articlePage: ArticlePage;
-  let editCommentView: EditCommentView;
 
   test.beforeEach(async ({ page }) => {
     articlesPage = new ArticlesPage(page);
     articlePage = new ArticlePage(page);
-    editCommentView = new EditCommentView(page);
 
     articleData = prepareRandomArticle();
 
@@ -52,7 +49,6 @@ test.describe('Create, verify and delete comment @logged', () => {
       // Act
       const articleComment = articlePage.getArticleComment(newCommentData.body);
       await expect(articleComment.body).toHaveText(newCommentData.body);
-      //await articleComment.link.click();
       const commentPage = await articlePage.clickCommentLink(
         articleComment.link,
       );
@@ -70,7 +66,7 @@ test.describe('Create, verify and delete comment @logged', () => {
       editCommentData = prepareRandomComment();
 
       // Act
-      await commentPage.editButton.click();
+      const editCommentView = await commentPage.clickEditButton();
       await editCommentView.updateComment(editCommentData);
 
       // Assert
@@ -82,7 +78,7 @@ test.describe('Create, verify and delete comment @logged', () => {
 
     await test.step('verify updated comment in article page', async () => {
       // Act
-      await commentPage.returnLink.click();
+      const articlePage = await commentPage.clickReturnLink();
       const updatedArticleComment = articlePage.getArticleComment(
         editCommentData.body,
       );
