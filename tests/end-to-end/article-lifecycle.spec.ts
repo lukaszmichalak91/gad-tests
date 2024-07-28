@@ -54,7 +54,7 @@ test.describe('Create, verify and delete articles', () => {
     await articlesPage.gotoArticle(articleData.title);
 
     // Act
-    await articlePage.deleteArticle();
+    articlesPage = await articlePage.deleteArticle();
 
     //Assert
     await articlePage.waitForPageToLoadUrl();

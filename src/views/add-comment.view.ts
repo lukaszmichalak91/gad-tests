@@ -1,7 +1,7 @@
 import { AddCommentModel } from '@_src/models/comment.model copy';
 import { Page } from '@playwright/test';
 
-export class AddCommentsView {
+export class AddCommentView {
   addNewHeader = this.page.getByRole('heading', { name: 'Add New Comment' });
 
   bodyInput = this.page.locator('#body');
