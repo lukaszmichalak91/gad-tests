@@ -1,19 +1,18 @@
 import { prepareRandomArticle } from '@_src/factories/article.factory';
 import { ArticlePage } from '@_src/pages/article.page';
 import { ArticlesPage } from '@_src/pages/articles.page';
-import { AddArticlesView } from '@_src/views/add-article.view';
+import { AddArticleView } from '@_src/views/add-article.view';
 import { expect, test } from '@playwright/test';
 
 test.describe('Verify articles', () => {
   let articlesPage: ArticlesPage;
-  let addArticlesView: AddArticlesView;
+  let addArticlesView: AddArticleView;
 
   test.beforeEach(async ({ page }) => {
     articlesPage = new ArticlesPage(page);
-    addArticlesView = new AddArticlesView(page);
 
     await articlesPage.goto();
-    await articlesPage.addArticleButtonLogged.click();
+    addArticlesView = await articlesPage.clickAddArticleButtonLogged();
 
     await expect.soft(addArticlesView.addNewHeader).toBeVisible();
   });

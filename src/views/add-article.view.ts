@@ -1,7 +1,7 @@
 import { AddArticleModel } from '@_src/models/article.model';
 import { Page } from '@playwright/test';
 
-export class AddArticlesView {
+export class AddArticleView {
   addNewHeader = this.page.getByRole('heading', { name: 'Add New Entry' });
   titleInput = this.page.getByTestId('title-input');
   bodyInput = this.page.getByTestId('body-text');
