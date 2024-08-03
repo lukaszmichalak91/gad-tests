@@ -49,7 +49,7 @@ test.describe('Verify articles', () => {
   });
 
   test.describe('title length', () => {
-    test('reject new article with title exceeding 128 signs @GAD-R04-02 @logged', async ({
+    test('reject new article with title exceeding 128 signs @GAD-R04-02 @GAD-R07-03 @logged', async ({
       addArticleView,
       page,
     }) => {
@@ -70,7 +70,7 @@ test.describe('Verify articles', () => {
       expect(response.status()).toBe(expectedResponseCode);
     });
 
-    test('create article with 128 signs title @GAD-R04-02 @logged', async ({
+    test('create article with 128 signs title @GAD-R04-02 @GAD-R07-03 @logged', async ({
       addArticleView,
       page,
     }) => {
