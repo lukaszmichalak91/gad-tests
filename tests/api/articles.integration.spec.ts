@@ -69,7 +69,7 @@ test.describe('Verify articles CRUD operations @api @GAD-R09-01', () => {
     const actualResponseStatus = responseArticle.status();
     expect(
       actualResponseStatus,
-      `status code expected ${expectedStatusCode}, but receiver ${actualResponseStatus}`,
+      `expect status code ${expectedStatusCode}, receiver ${actualResponseStatus}`,
     ).toBe(expectedStatusCode);
 
     const article = await responseArticle.json();
