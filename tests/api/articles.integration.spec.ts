@@ -1,6 +1,6 @@
 import { prepareRandomArticle } from '@_src/factories/article.factory';
 import { expect, test } from '@_src/fixtures/merge.fixture';
-import { testUser1 } from '@_src/test-data/user.data';
+import { getAuthorizationHeader } from '@_src/utils/api.util';
 
 test.describe('Verify articles CRUD operations @crud @GAD-R09-01', () => {
   test('should not create an article without a logged-in user', async ({
@@ -32,19 +32,7 @@ test.describe('Verify articles CRUD operations @crud @GAD-R09-01', () => {
   }) => {
     // Arrange
     const expectedStatusCode = 201;
-
-    // Login
-    const loginUrl = 'api/login';
-    const userData = {
-      email: testUser1.userEmail,
-      password: testUser1.userPassword,
-    };
-
-    const responseLogin = await request.post(loginUrl, {
-      data: userData,
-    });
-    const responseLoginJson = await responseLogin.json();
-
+    const headers = await getAuthorizationHeader(request);
     // Act
     const articlesUrl = 'api/articles';
 
@@ -57,9 +45,6 @@ test.describe('Verify articles CRUD operations @crud @GAD-R09-01', () => {
         '.\\data\\images\\256\\testing_645906ea-e746-4de1-86ce-0115b4e5e6b3.jpg',
     };
 
-    const headers = {
-      Authorization: `Bearer ${responseLoginJson.access_token}`,
-    };
     const responseArticle = await request.post(articlesUrl, {
       headers,
       data: articleData,
