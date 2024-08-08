@@ -1,7 +1,9 @@
-import { prepareRandomArticle } from '@_src/factories/article.factory';
 import { prepareRandomComment } from '@_src/factories/comment.factory';
 import { expect, test } from '@_src/fixtures/merge.fixture';
-import { getAuthorizationHeader } from '@_src/utils/api.util';
+import {
+  getAuthorizationHeader,
+  prepareArticlePayload,
+} from '@_src/utils/api.util';
 
 test.describe('Verify comment CRUD operations @crud @GAD-R09-02', () => {
   let headers: { [key: string]: string };
@@ -10,17 +12,8 @@ test.describe('Verify comment CRUD operations @crud @GAD-R09-02', () => {
   test.beforeAll('login and create article', async ({ request }) => {
     headers = await getAuthorizationHeader(request);
 
-    // Create article
     const articlesUrl = 'api/articles';
-
-    const randomArticleData = prepareRandomArticle();
-    const articleData = {
-      title: randomArticleData.title,
-      body: randomArticleData.body,
-      date: '2024-08-06T18:06:08.817Z',
-      image:
-        '.\\data\\images\\256\\testing_645906ea-e746-4de1-86ce-0115b4e5e6b3.jpg',
-    };
+    const articleData = prepareArticlePayload();
 
     const responseArticle = await request.post(articlesUrl, {
       headers,

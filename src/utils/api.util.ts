@@ -1,3 +1,4 @@
+import { prepareRandomArticle } from '@_src/factories/article.factory';
 import { testUser1 } from '@_src/test-data/user.data';
 import { APIRequestContext } from '@playwright/test';
 
@@ -22,4 +23,22 @@ export async function getAuthorizationHeader(
   return {
     Authorization: `Bearer ${responseLoginJson.access_token}`,
   };
+}
+
+interface ArticlePayload {
+  title: string;
+  body: string;
+  date: string;
+  image: string;
+}
+
+export function prepareArticlePayload(): ArticlePayload {
+  const randomArticleData = prepareRandomArticle();
+  const articleData = {
+    title: randomArticleData.title,
+    body: randomArticleData.body,
+    date: '2024-08-06T18:06:08.817Z',
+    image: '',
+  };
+  return articleData;
 }
