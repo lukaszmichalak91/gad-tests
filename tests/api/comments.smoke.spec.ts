@@ -1,14 +1,15 @@
 import { expect, test } from '@_src/fixtures/merge.fixture';
+import { apiLinks } from '@_src/utils/api.util';
 
 test.describe('Verify comments API endpoint @GAD-R08-02 @smoke', () => {
   test.describe('verify each condition in separate test', () => {
     test('GET comments returns status code 200', async ({ request }) => {
       // Arrange
       const expectedStatusCode = 200;
-      const commentsUrl = 'api/comments';
 
       // Act
-      const response = await request.get(commentsUrl);
+      const response = await request.get(apiLinks.commentsUrl);
+
       // Assert
       expect(response.status()).toBe(expectedStatusCode);
     });
@@ -18,10 +19,9 @@ test.describe('Verify comments API endpoint @GAD-R08-02 @smoke', () => {
     }) => {
       // Arrange
       const expectedMinCommentCount = 1;
-      const commentsUrl = 'api/comments';
 
       // Act
-      const response = await request.get(commentsUrl);
+      const response = await request.get(apiLinks.commentsUrl);
       const responseJson = await response.json();
 
       //Assert
@@ -42,15 +42,12 @@ test.describe('Verify comments API endpoint @GAD-R08-02 @smoke', () => {
         'date',
       ];
 
-      const commentsUrl = 'api/comments';
-
       // Act
-      const response = await request.get(commentsUrl);
+      const response = await request.get(apiLinks.commentsUrl);
       const responseJson = await response.json();
       const comment = responseJson[0];
 
       //Assert
-
       expectedRequiredFields.forEach((key) => {
         expect
           .soft(comment, `Expected key "${key}" should be in object`)
@@ -62,8 +59,7 @@ test.describe('Verify comments API endpoint @GAD-R08-02 @smoke', () => {
     request,
   }) => {
     // Arrange
-    const commentsUrl = 'api/comments';
-    const response = await request.get(commentsUrl);
+    const response = await request.get(apiLinks.commentsUrl);
 
     await test.step('GET comment returns status code 200', async () => {
       const expectedStatusCode = 200;

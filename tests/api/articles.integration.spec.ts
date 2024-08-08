@@ -1,5 +1,6 @@
 import { expect, test } from '@_src/fixtures/merge.fixture';
 import {
+  apiLinks,
   getAuthorizationHeader,
   prepareArticlePayload,
 } from '@_src/utils/api.util';
@@ -10,12 +11,10 @@ test.describe('Verify articles CRUD operations @crud @GAD-R09-01', () => {
   }) => {
     // Arrange
     const expectedStatusCode = 401;
-    const articlesUrl = 'api/articles';
-
     const articleData = prepareArticlePayload();
 
     // Arrange
-    const response = await request.post(articlesUrl, {
+    const response = await request.post(apiLinks.articlesUrl, {
       data: articleData,
     });
 
@@ -29,11 +28,10 @@ test.describe('Verify articles CRUD operations @crud @GAD-R09-01', () => {
     // Arrange
     const expectedStatusCode = 201;
     const headers = await getAuthorizationHeader(request);
-    // Act
-    const articlesUrl = 'api/articles';
-    const articleData = prepareArticlePayload();
 
-    const responseArticle = await request.post(articlesUrl, {
+    // Act
+    const articleData = prepareArticlePayload();
+    const responseArticle = await request.post(apiLinks.articlesUrl, {
       headers,
       data: articleData,
     });
