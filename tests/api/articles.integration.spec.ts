@@ -2,7 +2,7 @@ import { prepareRandomArticle } from '@_src/factories/article.factory';
 import { expect, test } from '@_src/fixtures/merge.fixture';
 import { testUser1 } from '@_src/test-data/user.data';
 
-test.describe('Verify articles CRUD operations @api @GAD-R09-01', () => {
+test.describe('Verify articles CRUD operations @crud @GAD-R09-01', () => {
   test('should not create an article without a logged-in user', async ({
     request,
   }) => {
