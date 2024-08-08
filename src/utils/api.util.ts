@@ -12,7 +12,7 @@ export interface ArticlePayload {
   date: string;
   image: string;
 }
-interface CommentPayload {
+export interface CommentPayload {
   article_id: number;
   body: string;
   date: string;
